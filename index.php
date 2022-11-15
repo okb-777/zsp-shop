@@ -1,13 +1,13 @@
 <html>
     <head>
-        <meta charset="utf-8">
         <title>ZSP-Shop</title>
+        <meta charset="utf-8">
         <link rel="stylesheet" href="styl.css">
         <?php
-            $db = new mysqli("127.0.0.1","root","","zsp-shop");
+            $db = new mysqli("localhost","root","","zsp-shop");
+            $db -> query ('SET NAMES utf8');
             $user = "SELECT nazwa, haslo FROM uzytkownicy";
-            setcookie ("nazwa", $_POST['login']);
-            setcookie ("haslo", $_POST['password']);
+            setcookie("Czy_zalogowano",0);
         ?>
     </head>
     <body>
@@ -15,40 +15,39 @@
             <h2>ZSP-Shop</h2>
         </div>
         <div>
-            <form action="index.php" method="post">
-                <h4>Logowanie</h4>
-                <p>login: <input type="text" name="login"></p>
-                <p>password: <input type="password" name="password"></p>
-                <p>
-                    <button type="submit" onclick>Log in</button>
-                    <a href="register.php">Stwórz konto</a>
-                </p>
-                
-                <?php
-                    if($u_result = $db -> query($user))
+            <form method="post">
+                <p><label>Login: <input type="text" name="login"></label></p>
+                <p><label>Password: <input type="password" name="password"></label></p>
+                <p><button type="submit">Zaloguj się</button> | <a href="register.php">Stwórz konto</a></p>
+            </form>
+            
+            <?php
+                if($result_user = $db -> query($user))
+                {
+                    while($row_user = $result_user -> fetch_array())
                     {
-                        while ($u_row = $u_result -> fetch_array())
+                        if(isset($_POST["login"]) && isset($_POST["password"]))
                         {
-                            print_r($u_row);
-                            
-                            echo "<br>";
-                            echo "<br>";
-                        }
-                    }
-                    print_r($_COOKIE); 
-                    if ((isset($_COOKIE['nazwa'])) == $u_row['nazwa'] && (isset($_COOKIE['haslo'])) == $u_row['haslo'])
-                    {
-                        echo "<b>Zalogowano</b><br>
-                            <a href='ogloszenia.php'>Przejdź do ogłoszeń</a>
-                            ";
+                            if($row_user["nazwa"]==$_POST["login"] && $row_user["haslo"]==$_POST["password"])
+                            {
+                                echo "<b>Zalogowano</b>";
+                                echo "<br>";
+                                echo "<a href='ogloszenia.php'>Ogłoszenia</a>";
+                                $_COOKIE["Czy_zalogowano"] = 1;
+                                break;
+                            }  
                         }
                         else
                         {
-                            echo "<b>Zalogowanie nie powiodło się </b><br>";
+                            break;
                         }
-                    
-                ?>
-            </form>
+                    } 
+                }
+                if($_COOKIE["Czy_zalogowano"] == 0)
+                {
+                    echo "<b>Zalogowanie nie powiodło się</b>";
+                }
+            ?>
         </div>
     </body>
 </html>

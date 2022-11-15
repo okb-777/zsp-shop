@@ -1,18 +1,3 @@
 *{
     text-align: center;
 }
-.banner{
-    background-color: firebrick;
-    color: white;
-    padding: 5px;
-    height: 50px;
-}
-.main{
-    background-color: bisque;
-    height: 500px;
-}
-.footer{
-    background-color: firebrick;
-    color: white;
-    height: 10%;
-}
