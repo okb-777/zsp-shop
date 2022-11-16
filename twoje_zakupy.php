@@ -35,7 +35,6 @@
                         {
                             $a++;
                             echo '• '.$row_ogloszenia['nazwa'].' - '.$row_ogloszenia['opis'].' - '.$row_ogloszenia['cena'].' zł<br>';
-                            break;
                         }
                     }
                 }
