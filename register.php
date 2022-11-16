@@ -8,14 +8,14 @@
         ?>
     </head>
     <body>
-        <div>
+        <div class="banner">
             <h2>Stwórz konto</h2>
         </div>
-        <div>
+        <div class="main">
             <form method="post">
                 <p><label>Login: <input type="text" name="login"></label></p>
                 <p><label>Password: <input type="password" name="password"></label></p>
-                <p><button type="submit">Stwórz konto</button> | <a href="index.php">Wróć</a></p>
+                <p><button type="submit"><b>Stwórz konto</b></button> | <a href="index.php" class="a2"><b>Wróć</b></a></p>
             </form>
             
             <?php
@@ -25,6 +25,9 @@
                     $db -> query ($user_add);
                 }
             ?>
+        </div>
+        <div class="banner">
+            <h4>ZSP-Shop</h4>
         </div>
     </body>
 </html>

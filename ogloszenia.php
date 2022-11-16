@@ -9,30 +9,50 @@
             $ogloszenia = ("SELECT nazwa, opis, cena FROM produkty");
             $zamowienia = ("SELECT produkty_id, uzytkownicy_id FROM zamowienia");
             $sql =("SELECT * FROM `produkty` LEFT JOIN zamowienia ON produkty.id = zamowienia.produkty_id WHERE uzytkownicy_id IS NULL");
+            setcookie("nazwa");
+            setcookie("opis");
+            setcookie("cena");
         ?>
     </head>
     <body>
-        <div>
+        <div class="banner">
             <h2>Ogłoszenia</h2> 
-            <p><a href="stworz_ogloszenie.php">Stwórz ogłoszenie</a> | <a href="index.php">Wyloguj</a></p>
+            <p>
+                <?php
+                    echo "<b>Zalogowany jako: </b>".$_COOKIE["uzytkownik"].'<br>';
+                ?> 
+                <a href="stworz_ogloszenie.php" class="a1"><b>Stwórz ogłoszenie</b></a>
+                |
+                <a href="twoje_zakupy.php" class="a1"><b>Twoje zakupy</b></a>
+                |
+                <a href="index.php" class="a1"><b>Wyloguj</b></a>
+            </p>
         </div>
-        <div>
-            <h4>Dostępne ogłoszenia:</h4>
+        <div class="main">
+            <h3>Dostępne ogłoszenia:</h3>
             <?php
                 if($result_sql = $db -> query($sql))
                 {
                     while($row_sql = $result_sql -> fetch_array())
                     {
-                        echo "<b>Nazwa: </b>".$row_sql["nazwa"];
-                        echo "<br>";
-                        echo "<b>Opis: </b>".$row_sql["opis"];
-                        echo "<br>";
-                        echo "<b>Cena: </b>".$row_sql["cena"]." zł";
-                        echo "<br>";
-                        echo "<br>";
+                        echo "<form action='kupno.php' method='post''>";
+                            echo "<b>Nazwa: </b>".$row_sql["nazwa"];
+                            echo "<br>";
+                            echo "<b>Opis: </b>".$row_sql["opis"];
+                            echo "<br>";
+                            echo "<b>Cena: </b>".$row_sql["cena"]." zł";
+                            echo "<p><button type='submit'><b>Kup</b></button></p>";
+                        
+                            setcookie("nazwa", $row_sql["nazwa"]);
+                            setcookie("opis", $row_sql["opis"]);
+                            setcookie("cena", $row_sql["cena"]);
+                        echo "</form>";
                     }
                 }
             ?>
+        </div>
+        <div class="banner">
+            <h4>ZSP-Shop</h4>
         </div>
     </body>
 </html>
