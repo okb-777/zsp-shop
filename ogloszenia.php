@@ -8,7 +8,7 @@
             $db -> query ('SET NAMES utf8');
             $ogloszenia = ("SELECT nazwa, opis, cena FROM produkty");
             $zamowienia = ("SELECT produkty_id, uzytkownicy_id FROM zamowienia");
-            $sql =("SELECT * FROM `produkty` LEFT JOIN zamowienia ON produkty.id = zamowienia.produkty_id WHERE uzytkownicy_id IS NULL");
+            $sql =("SELECT produkty.id, produkty.nazwa, produkty.opis, produkty.cena, zamowienia.produkty_id, zamowienia.uzytkownicy_id FROM `produkty` LEFT JOIN zamowienia ON produkty.id = zamowienia.produkty_id WHERE uzytkownicy_id IS NULL;");
             setcookie("nazwa");
             setcookie("opis");
             setcookie("cena");
@@ -35,7 +35,7 @@
                 {
                     while($row_sql = $result_sql -> fetch_array())
                     {
-                        echo "<form action='kupno.php' method='post''>";
+                        echo "<form action='kupno.php' method='post'>";
                             echo "<b>Nazwa: </b>".$row_sql["nazwa"];
                             echo "<br>";
                             echo "<b>Opis: </b>".$row_sql["opis"];
@@ -46,6 +46,8 @@
                             setcookie("nazwa", $row_sql["nazwa"]);
                             setcookie("opis", $row_sql["opis"]);
                             setcookie("cena", $row_sql["cena"]);
+                            
+                            setcookie("id_oferty", $row_sql["id"]);
                         echo "</form>";
                     }
                 }

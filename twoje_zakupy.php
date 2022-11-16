@@ -21,24 +21,27 @@
             
             <?php
                 $ogloszenia = "SELECT produkty.nazwa, produkty.opis, produkty.cena, zamowienia.produkty_id, uzytkownicy.id, uzytkownicy.nazwa AS nick FROM `produkty` LEFT JOIN zamowienia ON produkty.id = zamowienia.produkty_id LEFT JOIN uzytkownicy ON zamowienia.uzytkownicy_id = uzytkownicy.id;";
-                    
-                    if($result_ogloszenia = $db -> query($ogloszenia))
+            
+                $a = 0;
+            
+                echo '<h3>Kupujesz: </h3>';
+            
+                if($result_ogloszenia = $db -> query($ogloszenia))
+                {
+                    while($row_ogloszenia = $result_ogloszenia -> fetch_array())
                     {
-                        while($row_ogloszenia = $result_ogloszenia -> fetch_array())
-                        {
-                            echo '<h3>Kupujesz: </h3>';
-                            if($_COOKIE["uzytkownik"] == $row_ogloszenia['nick'])
-                            {
-                                echo '• '.$row_ogloszenia['nazwa'].' - '.$row_ogloszenia['opis'].' - '.$row_ogloszenia['cena'].'<br>';
-                            }
                             
-                            else
-                            {
-                                echo '• brak zakupionych produktów';
-                                break;
-                            }
+                        if($_COOKIE["uzytkownik"] == $row_ogloszenia['nick'])
+                        {
+                            $a++;
+                            echo '• '.$row_ogloszenia['nazwa'].' - '.$row_ogloszenia['opis'].' - '.$row_ogloszenia['cena'].' zł<br>';
+                            break;
                         }
                     }
+                }
+                if($a==0){
+                    echo 'brak złożeonego zamówienia';
+                }
             ?>
         </div>
         <div class="banner">

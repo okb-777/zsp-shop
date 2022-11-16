@@ -6,9 +6,10 @@
         <?php
             $db = new mysqli("localhost","root","","zsp-shop");
             $db -> query ('SET NAMES utf8');
-            $user = "SELECT nazwa, haslo FROM uzytkownicy";
+            $user = "SELECT id ,nazwa, haslo FROM uzytkownicy";
             setcookie("czy_zalogowano",0);
             setcookie("uzytkownik");
+            setcookie("id_uzytkownik");
         ?>
     </head>
     <body>
@@ -37,6 +38,7 @@
                                 echo "<a href='ogloszenia.php' class='a1'><b>Ogłoszenia</b></a>";
                                 $_COOKIE["czy_zalogowano"] = 1;
                                 setcookie("uzytkownik", $row_user["nazwa"]);
+                                setcookie("id_uzytkownik", $row_user["id"]);
                                 break;
                             }  
                         }
