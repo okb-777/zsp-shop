@@ -1,0 +1,1 @@
+UPDATE produkty SET nazwa = $_POST['nazwa_produktu'], opis = $_POST['opis_produktu'], cena = $_POST['cena_produktu'] WHERE id = $_POST['id_produktu'];
